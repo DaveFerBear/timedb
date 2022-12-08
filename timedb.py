@@ -6,14 +6,15 @@ A simple time-based, columnar data store.
 
 import time
 import os
+import sys
 
 
 class TimeDB(object):
     def __init__(self, folder='./store'):
+        self._clean_dir(folder)
         self.folder = folder
         self.n = 0
         self.field_ptr = {}
-        self._clean_dir(folder)
 
     def add(self, data):
         data['_timestamp'] = time.monotonic_ns()
@@ -37,6 +38,11 @@ class TimeDB(object):
 
     def query(self, filter):
         pass
+
+    def count(self, start_time=0, end_time=sys.maxsize):
+        cnt = 0
+        with open('{}/{}'.format('_timestamp', self.folder)) as f:
+            pass
 
     def _read_file(self, fname):
         with open(fname, 'r') as f:
